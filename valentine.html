@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine Surprise 💖</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI',sans-serif
+}
+body{
+  height:100vh;
+  overflow:hidden
+}
+
+/* ---------- PAGE 1 ---------- */
+#page1{
+  position:fixed;
+  inset:0;
+  background: radial-gradient(circle at top,#ff5f6d,#ffc371);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  color:#fff;
+  padding:20px;
+}
+
+h1{
+  font-size:clamp(1.8rem,5vw,2.6rem);
+  margin-bottom:25px;
+}
+
+.btns{
+  display:flex;
+  gap:18px;
+  position:relative;
+}
+
+button{
+  padding:12px 28px;
+  border:none;
+  border-radius:40px;
+  font-size:clamp(1rem,4vw,1.2rem);
+  cursor:pointer;
+}
+
+#yes{
+  background:#fff;
+  color:#ff3b6f;
+  font-weight:700;
+}
+
+/* NO button */
+#no{
+  background:#ff3b6f;
+  color:#fff;
+  position:fixed;
+  left:55vw;
+  top:55vh;
+}
+
+/* Floating emojis */
+.heart{
+  position:fixed;
+  font-size:clamp(14px,3vw,20px);
+  opacity:.6;
+  animation:float 8s linear infinite;
+}
+
+@keyframes float{
+  0%{bottom:-10%;opacity:0}
+  40%{opacity:.7}
+  100%{bottom:110%;opacity:0}
+}
+
+/* ---------- PAGE 2 ---------- */
+#page2{
+  display:none;
+  position:fixed;
+  inset:0;
+  background: linear-gradient(
+    180deg,
+    #ff7eb3 0%,
+    #ff9acb 30%,
+    #ffb6d5 60%,
+    #ffd1e8 100%
+  );
+  color:#fff;
+  overflow:hidden;
+  padding:20px;
+}
+
+/* Center message */
+.message{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:100%;
+  max-width:500px;
+  text-align:center;
+  animation:glow 2s infinite alternate;
+}
+
+.message p{
+  font-size:clamp(1.4rem,4.8vw,2rem);
+  margin-bottom:12px;
+}
+
+.message h2{
+  font-size:clamp(1.8rem,5.5vw,2.6rem);
+}
+
+@keyframes glow{
+  from{text-shadow:0 0 10px #fff}
+  to{text-shadow:0 0 25px #ff4f81}
+}
+/* my css */
+.heartBox{
+  position:fixed;
+  width:120px;
+  height:120px;
+  transform:rotate(45deg);
+  background:#ff2f68;
+  overflow:hidden;
+  z-index:5;
+}
+
+.heartBox::before,
+.heartBox::after{
+  content:"";
+  position:absolute;
+  width:120px;
+  height:120px;
+  
+  border-radius:50%;
+}
+
+.heartBox::before{
+  top:-60px;
+  left:0;
+}
+.heartBox::after{
+  left:-60px;
+  top:0;
+}
+
+.heartBox img{
+  position:absolute;
+  width:120px;
+  height:120px;
+  object-fit:cover;
+  transform:rotate(-60deg) scale(1.25);
+  top:0;
+  left:0;
+}
+
+
+
+/* Stars */
+.star{
+  position:fixed;
+  width:2px;
+  height:2px;
+  background:#fff;
+  opacity:.6;
+  animation:twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle{
+  from{opacity:.3}
+  to{opacity:1}
+}
+</style>
+</head>
+
+<body>
+
+<!-- PAGE 1 -->
+<div id="page1">
+  <h1>Will you be my Valentine? 💖</h1>
+  <div class="btns">
+    <button id="yes">YES ❤️</button>
+    <button id="no">NO 😜</button>
+  </div>
+</div>
+
+<!-- PAGE 2 -->
+<div id="page2">
+ <div class="heartBox">
+  <img src="love.jpeg" alt="Love">
+</div>
+
+<div class="heartBox">
+  <img src="jiju.jpeg" alt="Love">
+</div>
+
+
+
+
+  <!-- 🎵 BACKGROUND MUSIC -->
+  <audio id="bgMusic" loop>
+    <source src="hua_hai_aaj_pehli.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="message">
+    <p>You just filled my life with love 💖✨<br>
+    Happy Valentine’s Day!</p>
+    <h2>I LOVE YOU SO MUCH 🫶</h2>
+  </div>
+
+</div>
+
+<script>
+// Floating emojis
+const items=["💖","🍫","🌹"];
+items.forEach(icon=>{
+  for(let i=0;i<18;i++){
+    const h=document.createElement("div");
+    h.className="heart";
+    h.textContent=icon;
+    h.style.left=Math.random()*100+"vw";
+    h.style.animationDuration=(6+Math.random()*4)+"s";
+    document.body.appendChild(h);
+  }
+});
+
+// NO button movement (safe)
+const noBtn=document.getElementById("no");
+function moveNo(){
+  const bw=noBtn.offsetWidth, bh=noBtn.offsetHeight;
+  const pad=10;
+  const x=Math.random()*(window.innerWidth-bw-pad*2)+pad;
+  const y=Math.random()*(window.innerHeight-bh-pad*2)+pad;
+  noBtn.style.left=Math.max(pad,Math.min(x,window.innerWidth-bw-pad))+"px";
+  noBtn.style.top=Math.max(pad,Math.min(y,window.innerHeight-bh-pad))+"px";
+}
+noBtn.addEventListener("mouseenter",moveNo);
+noBtn.addEventListener("touchstart",moveNo,{passive:true});
+
+// YES click
+document.getElementById("yes").onclick=()=>{
+  page1.style.display="none";
+  page2.style.display="block";
+
+  const music=document.getElementById("bgMusic");
+  music.volume=0.5;
+  music.play();
+
+  for(let i=0;i<120;i++){
+    const s=document.createElement("div");
+    s.className="star";
+    s.style.left=Math.random()*100+"vw";
+    s.style.top=Math.random()*100+"vh";
+    s.style.animationDuration=(1+Math.random()*2)+"s";
+    page2.appendChild(s);
+  }
+};
+</script>
+<script>
+// Bouncing heart logic
+// MULTIPLE BOUNCING HEARTS
+const hearts = document.querySelectorAll(".heartBox");
+
+hearts.forEach(heart=>{
+  let x = Math.random() * (innerWidth - 140);
+  let y = Math.random() * (innerHeight - 140);
+  let dx = 2 + Math.random()*2;
+  let dy = 2 + Math.random()*2;
+
+  function move(){
+    const size = 140;
+
+    x += dx;
+    y += dy;
+
+    if(x <= 0 || x >= innerWidth - size) dx *= -1;
+    if(y <= 0 || y >= innerHeight - size) dy *= -1;
+
+    heart.style.left = x + "px";
+    heart.style.top  = y + "px";
+
+    requestAnimationFrame(move);
+  }
+  move();
+});
+
+</script>
+
+</body>
+</html>
